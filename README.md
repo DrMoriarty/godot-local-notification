@@ -9,6 +9,9 @@ Example:
 ```
 if Globals.has_singleton("GodotLocalNotification"):
         var ln = Globals.get_singleton("GodotLocalNotification")
-        ln.showLocalNotification("Message", "Title or application name", 20)  # 20 is an interval in seconds
+        ln.showLocalNotification("Message", "Title or application name", 20, 1)
+        # 20 is an interval in seconds
+        # 1 is a notification tag
+        # you can override the notification with the same tag before it was fired
 
 ```

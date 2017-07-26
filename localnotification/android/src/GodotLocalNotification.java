@@ -53,9 +53,8 @@ public class GodotLocalNotification extends Godot.SingletonBase {
 		return callbackId;
 	}
 
-    public void showLocalNotification(String message, String title, int interval) {
+    public void showLocalNotification(String message, String title, int interval, int tag) {
         if(interval <= 0) return;
-        int tag = 1;
         Log.i("godot", "showLocalNotification: "+message+", "+Integer.toString(interval)+", "+Integer.toString(tag));
         PendingIntent sender = getPendingIntent(message, title, tag);
                
