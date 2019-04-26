@@ -1,7 +1,5 @@
 package org.godotengine.godot;
 
-import com.godot.game.R;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -30,13 +28,13 @@ public class LocalNotificationReceiver extends BroadcastReceiver {
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent2,
 				PendingIntent.FLAG_UPDATE_CURRENT);
 
-		Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(),
-				R.drawable.icon);
+        int iconID = context.getResources().getIdentifier("icon", "drawable", context.getPackageName());
+		Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), iconID);
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 		//builder.setContentTitle(context.getString(R.string.app_name));
         builder.setContentTitle(title);
 		builder.setContentText(message);
-		builder.setSmallIcon(R.drawable.icon);
+		builder.setSmallIcon(iconID);
 		builder.setLargeIcon(largeIcon);
 		builder.setTicker(message);
 		builder.setAutoCancel(true);

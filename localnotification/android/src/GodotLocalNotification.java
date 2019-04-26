@@ -16,7 +16,6 @@ import org.json.JSONException;
 public class GodotLocalNotification extends Godot.SingletonBase {
 
     private Godot activity = null;
-    private Integer callbackId; 
 
     static public Godot.SingletonBase initialize(Activity p_activity) 
     { 
@@ -25,33 +24,22 @@ public class GodotLocalNotification extends Godot.SingletonBase {
 
     public GodotLocalNotification(Activity p_activity) 
     {
-        registerClass("GodotLocalNotification", new String[]{"init", "setCallbackId", "getCallbackId", "showLocalNotification"});
+        registerClass("GodotLocalNotification", new String[]{"init", "showLocalNotification", "isInited", "isEnabled"});
         activity = (Godot)p_activity;
     }
 
     // Public methods
 
-    public void init(final String key)
-    {
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-  
-                } catch (Exception e) {
-                    Log.e("godot", "Exception: " + e.getMessage());  
-                }
-            }
-        });
+    public void init() {
     }
 
-    public void setCallbackId(int callbackId) {
-		this.callbackId = callbackId;
-	}
+    public boolean isInited() {
+        return true;
+    }
 
-    public int getCallbackId() {
-		return callbackId;
-	}
+    public boolean isEnabled() {
+        return true;
+    }
 
     public void showLocalNotification(String message, String title, int interval, int tag) {
         if(interval <= 0) return;
@@ -76,11 +64,6 @@ public class GodotLocalNotification extends Godot.SingletonBase {
         PendingIntent sender = PendingIntent.getBroadcast(activity, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
         return sender;
     }
-
-    public void callbackSuccess(String ticket, String signature, String sku) {
-		//GodotLib.callobject(facebookCallbackId, "purchase_success", new Object[]{ticket, signature, sku});
-        //GodotLib.calldeferred(purchaseCallbackId, "consume_fail", new Object[]{});
-	}
 
     @Override protected void onMainActivityResult (int requestCode, int resultCode, Intent data)
     {
