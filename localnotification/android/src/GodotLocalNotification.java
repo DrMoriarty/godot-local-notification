@@ -24,7 +24,7 @@ public class GodotLocalNotification extends Godot.SingletonBase {
 
     public GodotLocalNotification(Activity p_activity) 
     {
-        registerClass("GodotLocalNotification", new String[]{"init", "showLocalNotification", "isInited", "isEnabled"});
+        registerClass("GodotLocalNotification", new String[]{"init", "showLocalNotification", "isInited", "isEnabled", "register_remote_notification", "get_device_token"});
         activity = (Godot)p_activity;
     }
 
@@ -52,6 +52,13 @@ public class GodotLocalNotification extends Godot.SingletonBase {
                
         AlarmManager am = (AlarmManager)activity.getSystemService(activity.ALARM_SERVICE);
         am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+    }
+
+    public void register_remote_notification() {
+    }
+
+    public String get_device_token() {
+        return "";
     }
 
     // Internal methods

@@ -14,6 +14,7 @@ class GodotLocalNotification : public Object {
     GDCLASS(GodotLocalNotification, Object);
 
     static void _bind_methods();
+    static String deviceToken;
     bool enabled;
     bool inited;
 
@@ -25,7 +26,9 @@ public:
     bool isEnabled();
     bool isInited();
     void init();
-
+    void registerRemoteNotifications();
+    void setDeviceToken(void* devToken); // NSString * devToken
+    String getDeviceToken();
 };
 
 #endif /* LocalNotification_h */
