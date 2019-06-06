@@ -98,7 +98,7 @@ static void didRegisterForRemoteNotificationsWithDeviceToken(id self, SEL _cmd, 
 }
 
 static void didFailToRegisterForRemoteNotificationsWithError(id self, SEL _cmd, UIApplication *application, NSError* error);
-static void didFailToRegisterForRemoteNotificationsWithErrorIMP(id self, SEL _cmd, UIApplication *application, NSError* error);
+static void (*didFailToRegisterForRemoteNotificationsWithErrorIMP)(id self, SEL _cmd, UIApplication *application, NSError* error);
 static void didFailToRegisterForRemoteNotificationsWithError(id self, SEL _cmd, UIApplication *application, NSError* error) {
     if(didFailToRegisterForRemoteNotificationsWithErrorIMP != nil)
         didFailToRegisterForRemoteNotificationsWithErrorIMP(self, _cmd, application, error);
@@ -107,7 +107,7 @@ static void didFailToRegisterForRemoteNotificationsWithError(id self, SEL _cmd, 
 }
 
 static void didReceiveRemoteNotification(id self, SEL _cmd, UIApplication *application, NSDictionary *userInfo, void (^completionHandler)(UIBackgroundFetchResult result));
-static void didReceiveRemoteNotificationIMP(id self, SEL _cmd, UIApplication *application, NSDictionary *userInfo, void (^completionHandler)(UIBackgroundFetchResult result));
+static void (*didReceiveRemoteNotificationIMP)(id self, SEL _cmd, UIApplication *application, NSDictionary *userInfo, void (^completionHandler)(UIBackgroundFetchResult result));
 static void didReceiveRemoteNotification(id self, SEL _cmd, UIApplication *application, NSDictionary *userInfo, void (^completionHandler)(UIBackgroundFetchResult result)) {
     if(didReceiveRemoteNotificationIMP != nil)
         didReceiveRemoteNotificationIMP(self, _cmd, application, userInfo, completionHandler);
@@ -208,8 +208,8 @@ void GodotLocalNotification::showLocalNotification(const String& message, const 
         NSLog(@"Can not show local notification!");
         return;
     }
-    NSString *msg = [NSString stringWithUTF8String:message.utf8().ptr()];
-    NSString *tit = [NSString stringWithUTF8String:title.utf8().ptr()];
+    NSString *msg = [NSString stringWithUTF8String:message.utf8().get_data()];
+    NSString *tit = [NSString stringWithUTF8String:title.utf8().get_data()];
     NSString *ident = [NSString stringWithFormat:@"ln_%d", tag];
     NSLog(@"showLocalNotification: %@, %@, %@", msg, @(interval), @(tag));
 
