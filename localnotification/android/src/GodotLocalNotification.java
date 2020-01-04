@@ -3,6 +3,7 @@ package org.godotengine.godot;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.app.AlarmManager;
+import android.os.Bundle;
 import android.content.Intent;
 import android.util.Log;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.json.JSONException;
 public class GodotLocalNotification extends Godot.SingletonBase {
 
     private Godot activity = null;
+    private Dictionary notificationData = new Dictionary();
 
     static public Godot.SingletonBase initialize(Activity p_activity) 
     { 
@@ -24,8 +26,9 @@ public class GodotLocalNotification extends Godot.SingletonBase {
 
     public GodotLocalNotification(Activity p_activity) 
     {
-        registerClass("GodotLocalNotification", new String[]{"init", "showLocalNotification", "isInited", "isEnabled", "register_remote_notification", "get_device_token"});
+        registerClass("GodotLocalNotification", new String[]{"init", "showLocalNotification", "isInited", "isEnabled", "register_remote_notification", "get_device_token", "get_notification_data"});
         activity = (Godot)p_activity;
+        checkIntentExtra();
     }
 
     // Public methods
@@ -74,6 +77,34 @@ public class GodotLocalNotification extends Godot.SingletonBase {
 
     @Override protected void onMainActivityResult (int requestCode, int resultCode, Intent data)
     {
+    }
+
+    @Override protected void onMainResume() {
+        checkIntentExtra();
+    } 
+
+    private void checkIntentExtra() {
+        if(Godot.getCurrentIntent() == null || Godot.getCurrentIntent().getExtras() == null) {
+            Log.e("godot", "RN: No extra bundle in app activity!");
+            return;
+        }
+        Bundle extras = Godot.getCurrentIntent().getExtras();
+        Log.e("godot", "RN: Extras:" + extras.toString());
+        notificationData = new Dictionary();
+        for (String key : extras.keySet()) {
+            Object value = extras.get(key);
+            try {
+                notificationData.put(key, value);
+            } catch(Exception e) {
+                Log.e("godot", "RN: Conversion error: " + e.toString());
+                e.printStackTrace();
+            }
+            Log.e("godot", "RN: Extras content: " + notificationData.toString());
+        }
+    }
+
+    public Dictionary get_notification_data() {
+        return notificationData;
     }
 
 }
