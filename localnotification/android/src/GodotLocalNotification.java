@@ -6,6 +6,7 @@ import android.app.AlarmManager;
 import android.os.Bundle;
 import android.content.Intent;
 import android.util.Log;
+import android.net.Uri;
 import java.util.Map;
 import java.util.List;
 import java.util.Arrays;
@@ -18,6 +19,8 @@ public class GodotLocalNotification extends Godot.SingletonBase {
 
     private Godot activity = null;
     private Dictionary notificationData = new Dictionary();
+    private String action = null;
+    private String uri = null;
 
     static public Godot.SingletonBase initialize(Activity p_activity) 
     { 
@@ -26,9 +29,19 @@ public class GodotLocalNotification extends Godot.SingletonBase {
 
     public GodotLocalNotification(Activity p_activity) 
     {
-        registerClass("GodotLocalNotification", new String[]{"init", "showLocalNotification", "isInited", "isEnabled", "register_remote_notification", "get_device_token", "get_notification_data"});
+        registerClass("GodotLocalNotification", new String[]{
+                "init",
+                "showLocalNotification",
+                "isInited",
+                "isEnabled",
+                "register_remote_notification",
+                "get_device_token",
+                "get_notification_data",
+                "get_deeplink_action",
+                "get_deeplink_uri"
+            });
         activity = (Godot)p_activity;
-        checkIntentExtra();
+        checkIntent();
     }
 
     // Public methods
@@ -80,26 +93,37 @@ public class GodotLocalNotification extends Godot.SingletonBase {
     }
 
     @Override protected void onMainResume() {
-        checkIntentExtra();
+        checkIntent();
     } 
 
-    private void checkIntentExtra() {
-        if(Godot.getCurrentIntent() == null || Godot.getCurrentIntent().getExtras() == null) {
-            Log.e("godot", "RN: No extra bundle in app activity!");
+    private void checkIntent() {
+        Intent intent = Godot.getCurrentIntent();
+        if(intent == null) {
+            Log.e("godot", "RN: No intent in app activity!");
             return;
         }
-        Bundle extras = Godot.getCurrentIntent().getExtras();
-        Log.e("godot", "RN: Extras:" + extras.toString());
-        notificationData = new Dictionary();
-        for (String key : extras.keySet()) {
-            Object value = extras.get(key);
-            try {
-                notificationData.put(key, value);
-            } catch(Exception e) {
-                Log.e("godot", "RN: Conversion error: " + e.toString());
-                e.printStackTrace();
+        if(intent.getExtras() != null) {
+            Bundle extras = Godot.getCurrentIntent().getExtras();
+            Log.e("godot", "RN: Extras:" + extras.toString());
+            notificationData = new Dictionary();
+            for (String key : extras.keySet()) {
+                Object value = extras.get(key);
+                try {
+                    notificationData.put(key, value);
+                } catch(Exception e) {
+                    Log.e("godot", "RN: Conversion error: " + e.toString());
+                    e.printStackTrace();
+                }
+                Log.e("godot", "RN: Extras content: " + notificationData.toString());
             }
-            Log.e("godot", "RN: Extras content: " + notificationData.toString());
+        } else {
+            Log.e("godot", "RN: No extra bundle in app activity!");
+        }
+        if(intent.getAction() != null) {
+            action = intent.getAction();
+        }
+        if(intent.getData() != null) {
+            uri = intent.getData().toString();
         }
     }
 
@@ -107,4 +131,11 @@ public class GodotLocalNotification extends Godot.SingletonBase {
         return notificationData;
     }
 
+    public String get_deeplink_action() {
+        return action;
+    }
+
+    public String get_deeplink_uri() {
+        return uri;
+    }
 }
