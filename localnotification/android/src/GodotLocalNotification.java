@@ -61,13 +61,13 @@ public class GodotLocalNotification extends Godot.SingletonBase {
         if(interval <= 0) return;
         Log.i("godot", "showLocalNotification: "+message+", "+Integer.toString(interval)+", "+Integer.toString(tag));
         PendingIntent sender = getPendingIntent(message, title, tag);
-               
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.add(Calendar.SECOND, interval);
                
         AlarmManager am = (AlarmManager)activity.getSystemService(activity.ALARM_SERVICE);
-        am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+        am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
     }
 
     public void register_remote_notification() {
