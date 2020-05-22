@@ -1,0 +1,100 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.6.0'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.1"
+
+    defaultConfig {
+        minSdkVersion 18
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+    }
+
+    // Used to customize the name of generated AAR file.
+    libraryVariants.all { variant ->
+        variant.outputs.all { output ->
+            output.outputFileName = "LocalNotification.${variant.name}.aar"
+        }
+    }
+
+}
+
+dependencies {
+    /*
+    Used to provide dependency on the Godot Android library. A version of that
+    library will be made available for each stable release of Godot.
+    `compileOnly` is used instead of `implementation` to ensure that the
+     godot library is not bundled with the generated plugin AAR file. This is
+     necessary since the Godot editor will also provide a version of the godot
+     library when building the final binary.
+     */
+    compileOnly fileTree(dir: 'libs', include: ['godot-lib*.aar'])
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+}
+
+group = 'ru.mobilap.godot'
+version = '0.0.1'
+ext {
+    artifact = 'godot-localnotification'
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+
+afterEvaluate {
+//    generateReleaseBuildConfig.enabled = false
+//    generateDebugBuildConfig.enabled = false
+
+    publishing {
+        publications {
+            MyPublication(MavenPublication) {
+                from components.release
+                groupId group
+                artifactId artifact
+                version version
+            }
+        }
+    }
+
+    // Bintray
+    bintray {
+        user = properties.getProperty("bintray.user")
+        key = properties.getProperty("bintray.apikey")
+        publications = ['MyPublication']
+        pkg {
+            repo = 'maven'
+            name = artifact
+            userOrg = 'mobilap'
+            desc = 'Local notifications for godot engine.'
+            websiteUrl = 'https://github.com/DrMoriarty/godot-local-notification'
+            vcsUrl = 'https://github.com/DrMoriarty/godot-local-notification.git'
+            licenses = ["MIT", "BSD"]
+            publish = true
+            publicDownloadNumbers = true
+            version {
+            }
+        }
+    }
+}

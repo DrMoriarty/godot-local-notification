@@ -1,14 +1,21 @@
-This is a module for [Godot Game Engine](http://godotengine.org/) which add local notification feature (for Android only). 
+# godot-local-notification
 
-To use it, make sure you're able to compile the Godot android template, you can find the instructions [here](http://docs.godotengine.org/en/latest/reference/compiling_for_android.html). After that, just copy the the localnotification folder to godot/modules and recompile it.
+This is a module for [Godot Game Engine](http://godotengine.org/) which add local notification feature. 
 
-Also you should add `org/godotengine/godot/GodotLocalNotification` into android.modules config section of your project.
+## Android usage (You need godot version 3.2.2.beta or higher.)
 
-Example:
+Copy `LocalNotification.gdap` to `android/plugins`. Then enable plugin `LocalNotification` in export settings.
+
+## iOS usage
+
+Coming soon...
+
+
+Usage example:
 
 ```
-if Globals.has_singleton("GodotLocalNotification"):
-        var ln = Globals.get_singleton("GodotLocalNotification")
+if Globals.has_singleton("LocalNotification"):
+        var ln = Globals.get_singleton("LocalNotification")
         ln.showLocalNotification("Message", "Title or application name", 20, 1)
         # 20 is an interval in seconds
         # 1 is a notification tag
