@@ -1,3 +1,4 @@
 *.pyc
 *.o
 *.d
+ios-plugin/.sconsign.dblite
