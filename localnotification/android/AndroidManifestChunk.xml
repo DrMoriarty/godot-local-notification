@@ -1,2 +1,0 @@
-
-<receiver android:name="org.godotengine.godot.LocalNotificationReceiver" android:process=":remote" />
