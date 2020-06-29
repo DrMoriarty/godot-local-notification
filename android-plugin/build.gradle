@@ -52,7 +52,7 @@ dependencies {
 }
 
 group = 'ru.mobilap.godot'
-version = '0.0.1'
+version = '0.0.2'
 ext {
     artifact = 'godot-localnotification'
 }
