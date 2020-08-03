@@ -2,3 +2,5 @@
 *.o
 *.d
 ios-plugin/.sconsign.dblite
+ios-framework/build/*
+ios-framework/gdnative_ios.xcodeproj/project.xcworkspace/xcuserdata
