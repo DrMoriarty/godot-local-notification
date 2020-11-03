@@ -2,7 +2,7 @@
 
 name="LocalNotification"
 binary_type="remote"
-binary="ru.mobilap.godot:godot-localnotification:+"
+binary="ru.mobilap.godot:godot-localnotification:0.0.3"
 
 [dependencies]
 
