@@ -1,0 +1,28 @@
+{
+  "name": "local-notification",
+  "description": "Local notification plugin for iOS/Android",
+  "version": "0.1.0",
+  "license": "MIT",
+  "url": "https://github.com/DrMoriarty/godot-local-notification.git",
+  "dependencies": [
+  ],
+  "files": {
+    "scripts": "scripts"
+  },
+  "platform_ios": {
+    "dependencies": [
+    ],
+    "files": {
+      "ios-framework/build/localnotification.gdnlib": "addons/localnotification-ios/",
+      "ios-framework/build/localnotification.gdns": "addons/localnotification-ios/",
+      "ios-framework/build/.gitignore": "addons/localnotification-ios/",
+      "ios-framework/build/localnotification.xcframework": "addons/localnotification-ios/localnotification.xcframework"
+    }
+  },
+  "platform_android": {
+    "files": {
+      "android-plugin/LocalNotification.gdap": "android/plugins/",
+      "android-plugin/build/outputs/aar/LocalNotification.release.aar": "android/plugins/"
+    }
+  }
+}

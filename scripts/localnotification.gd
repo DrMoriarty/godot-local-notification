@@ -1,0 +1,77 @@
+extends Node
+
+signal device_token_received(token)
+signal enabled
+var _ln = null
+
+onready var _analytics := $'/root/analytics' if has_node('/root/analytics') else null
+
+func _ready():
+    pause_mode = Node.PAUSE_MODE_PROCESS
+    if Engine.has_singleton("LocalNotification"):
+        _ln = Engine.get_singleton("LocalNotification")
+    elif OS.get_name() == 'iOS':
+        _ln = preload("res://addons/localnotification-ios/localnotification.gdns").new()
+        _ln.connect('notifications_enabled', self, '_on_notifications_enabled')
+        _ln.connect('device_token_received', self, '_on_device_token_received')
+    if _ln == null:
+        push_warning('LocalNotification plugin not found!')
+    else:
+        print('LocalNotification plugin inited')
+
+func init():
+    if _ln != null:
+        _ln.init()
+
+func show(message, title, interval, tag=1):
+    if _ln != null:
+        _ln.showLocalNotification(message, title, interval, tag)
+
+func is_inited():
+    if _ln != null:
+        return _ln.isInited()
+    else:
+        return false
+
+func is_enabled():
+    if _ln != null:
+        return _ln.isEnabled()
+    else:
+        return false
+
+func register_remote_notification():
+    if _ln != null:
+        _ln.register_remote_notification()
+
+func get_device_token():
+    if _ln != null:
+        return _ln.get_device_token()
+    else:
+        return null
+
+func get_notification_data():
+    if _ln != null:
+        return _ln.get_notification_data()
+    else:
+        return null
+
+func get_deeplink_action():
+    if _ln != null:
+        return _ln.get_deeplink_action()
+    else:
+        return null
+
+func get_deeplink_uri():
+    if _ln != null:
+        return _ln.get_deeplink_uri()
+    else:
+        return null
+
+func _on_notifications_enabled():
+    if _analytics != null:
+        _analytics.event('notifications_enabled')
+    emit_signal('enabled')
+
+func _on_device_token_received(token):
+    #print('on_device_token_received: %s'%var2str(token))
+    emit_signal('device_token_received', token)

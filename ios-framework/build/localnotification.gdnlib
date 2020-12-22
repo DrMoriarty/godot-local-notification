@@ -7,8 +7,8 @@ reloadable=false
 
 [entry]
 
-iOS.armv7="res://addons/bin/localnotification.xcframework"
-iOS.arm64="res://addons/bin/localnotification.xcframework"
+iOS.armv7="res://addons/localnotification-ios/localnotification.xcframework"
+iOS.arm64="res://addons/localnotification-ios/localnotification.xcframework"
 
 [dependencies]
 

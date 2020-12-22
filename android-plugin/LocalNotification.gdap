@@ -1,8 +1,8 @@
 [config]
 
 name="LocalNotification"
-binary_type="remote"
-binary="ru.mobilap.godot:godot-localnotification:0.0.3"
+binary_type="local"
+binary="LocalNotification.release.aar"
 
 [dependencies]
 
