@@ -1,24 +1,53 @@
-# godot-local-notification
+# Local/Push notification plugin for Godot engine
 
-This is a module for [Godot Game Engine](http://godotengine.org/) which add local notification feature. 
+This is a module for [Godot Game Engine](http://godotengine.org/) which add local and remote notification feature for iOS and Android. 
 
-## Android usage (You need godot version 3.2.2.beta or higher.)
+## Installation
 
-Copy `LocalNotification.gdap` to `android/plugins`. Then enable plugin `LocalNotification` in export settings.
+1. At first you need [NativeLib-CLI](https://github.com/DrMoriarty/nativelib-cli) or [NativeLib Addon](https://github.com/DrMoriarty/nativelib).
 
-## iOS usage
+2. Make `nativelib -i local-notification` in your project directory if you are using CLI. Find `LOCAL-NOTIFICATION` in plugins list and press "Install" button if you are using GUI Addon.
 
-Coming soon...
+3. Enable **Custom Build** for using in Android.
 
+## Usage
 
-Usage example:
+Add wrapper `scripts/localnotification.gd` into autoloading list in your project. So you can use it everywhere in your code.
 
-```
-if Globals.has_singleton("LocalNotification"):
-        var ln = Globals.get_singleton("LocalNotification")
-        ln.showLocalNotification("Message", "Title or application name", 20, 1)
-        # 20 is an interval in seconds
-        # 1 is a notification tag
-        # you can override the notification with the same tag before it was fired
+## API
 
-```
+### show(message: String, title: String, interval: float, tag: int)
+
+Show notification with `title` and `message` after delay of `interval` seconds with `tag`. You can override notification by it's tag before it was fired.
+
+### init()
+
+Request permission for notifications (iOS only).
+
+### is_inited() -> bool
+
+Check if notification permission was requested from user (iOS only).
+
+### is_enabled() -> bool
+
+Check if notification permission was granted by user (iOS only).
+
+### register_remote_notification()
+
+Request system token for push notifications.
+
+### get_device_token() -> String
+
+Returns system token for push notification.
+
+### get_notification_data() -> Dictionary
+
+Returns custom data from activated notification (Android only).
+
+### get_deeplink_action() -> String
+
+Returns action from deeplink, if exists. (Android only).
+
+### get_deeplink_uri() -> String
+
+Returns deeplink URI, if exists (Android only).
