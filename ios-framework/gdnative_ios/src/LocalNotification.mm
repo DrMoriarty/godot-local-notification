@@ -256,6 +256,21 @@ String LocalNotification::getDeviceToken()
     return dt;
 }
 
+Dictionary LocalNotification::getNotificationData()
+{
+    return Dictionary();
+}
+
+String LocalNotification::getDeeplinkAction()
+{
+    return String("");
+}
+
+String LocalNotification::getDeeplinkUri()
+{
+    return String("");
+}
+
 void LocalNotification::_register_methods()
 {
     register_method("_init", &LocalNotification::_init);
@@ -265,8 +280,10 @@ void LocalNotification::_register_methods()
     register_method("init", &LocalNotification::init);
     register_method("register_remote_notification", &LocalNotification::registerRemoteNotifications);
     register_method("get_device_token", &LocalNotification::getDeviceToken);
+    register_method("get_notification_data", &LocalNotification::getNotificationData);
+    register_method("get_deeplink_action", &LocalNotification::getDeeplinkAction);
+    register_method("get_deeplink_uri", &LocalNotification::getDeeplinkUri);
 
     register_signal<LocalNotification>("notifications_enabled");
     register_signal<LocalNotification>("device_token_received", "device_token", GODOT_VARIANT_TYPE_STRING);
 }
-

@@ -11,7 +11,7 @@ func _ready():
     if Engine.has_singleton("LocalNotification"):
         _ln = Engine.get_singleton("LocalNotification")
     elif OS.get_name() == 'iOS':
-        _ln = preload("res://addons/localnotification-ios/localnotification.gdns").new()
+        _ln = load("res://addons/localnotification-ios/localnotification.gdns").new()
         _ln.connect('notifications_enabled', self, '_on_notifications_enabled')
         _ln.connect('device_token_received', self, '_on_device_token_received')
     if _ln == null:

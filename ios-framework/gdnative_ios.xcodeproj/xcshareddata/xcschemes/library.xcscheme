@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "90A13CE724AB317C00E8464F"
-               BuildableName = "rateme.framework"
+               BuildableName = "localnotification.framework"
                BlueprintName = "gdnative_ios"
                ReferencedContainer = "container:gdnative_ios.xcodeproj">
             </BuildableReference>
@@ -51,7 +51,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "90A13CE724AB317C00E8464F"
-            BuildableName = "rateme.framework"
+            BuildableName = "localnotification.framework"
             BlueprintName = "gdnative_ios"
             ReferencedContainer = "container:gdnative_ios.xcodeproj">
          </BuildableReference>

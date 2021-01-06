@@ -32,6 +32,10 @@ public:
     void registerRemoteNotifications();
     void setDeviceToken(void* devToken); // NSString * devToken
     godot::String getDeviceToken();
+    godot::Dictionary getNotificationData();
+    godot::String getDeeplinkAction();
+    godot::String getDeeplinkUri();
+
 };
 
 #endif /* LocalNotification_h */
