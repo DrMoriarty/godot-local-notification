@@ -25,7 +25,6 @@ import org.godotengine.godot.plugin.SignalInfo;
 
 public class LocalNotification extends GodotPlugin {
 
-    private Godot activity = null;
     private Dictionary notificationData = new Dictionary();
     private String action = null;
     private String uri = null;
@@ -33,7 +32,6 @@ public class LocalNotification extends GodotPlugin {
     public LocalNotification(Godot godot) 
     {
         super(godot);
-        activity = godot;
         checkIntent();
     }
 
@@ -91,7 +89,7 @@ public class LocalNotification extends GodotPlugin {
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.add(Calendar.SECOND, interval);
                
-        AlarmManager am = (AlarmManager)activity.getSystemService(activity.ALARM_SERVICE);
+        AlarmManager am = (AlarmManager)getActivity().getSystemService(getActivity().ALARM_SERVICE);
         if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
             am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
         } else {
@@ -109,11 +107,11 @@ public class LocalNotification extends GodotPlugin {
     // Internal methods
 
     private PendingIntent getPendingIntent(String message, String title, int tag) {
-        Intent i = new Intent(activity.getApplicationContext(), LocalNotificationReceiver.class);
+        Intent i = new Intent(getActivity().getApplicationContext(), LocalNotificationReceiver.class);
         i.putExtra("notification_id", tag);
         i.putExtra("message", message);
         i.putExtra("title", title);
-        PendingIntent sender = PendingIntent.getBroadcast(activity, tag, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent sender = PendingIntent.getBroadcast(getActivity(), tag, i, PendingIntent.FLAG_UPDATE_CURRENT);
         return sender;
     }
 

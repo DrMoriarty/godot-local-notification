@@ -1,9 +1,14 @@
 {
   "name": "local-notification",
   "description": "Local notification plugin for iOS/Android",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "license": "MIT",
   "url": "https://github.com/DrMoriarty/godot-local-notification.git",
+  "author": {
+    "name": "DrMoriarty",
+    "url": "https://github.com/DrMoriarty",
+    "donate": "https://ko-fi.com/drmoriarty"
+  },
   "dependencies": [
   ],
   "files": {
