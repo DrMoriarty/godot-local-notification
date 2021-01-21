@@ -25,6 +25,7 @@ import org.godotengine.godot.plugin.SignalInfo;
 
 public class LocalNotification extends GodotPlugin {
 
+    private final String TAG = LocalNotification.class.getName();
     private Dictionary notificationData = new Dictionary();
     private String action = null;
     private String uri = null;
@@ -82,7 +83,7 @@ public class LocalNotification extends GodotPlugin {
 
     public void showLocalNotification(String message, String title, int interval, int tag) {
         if(interval <= 0) return;
-        Log.i("godot", "showLocalNotification: "+message+", "+Integer.toString(interval)+", "+Integer.toString(tag));
+        Log.i(TAG, "showLocalNotification: "+message+", "+Integer.toString(interval)+", "+Integer.toString(tag));
         PendingIntent sender = getPendingIntent(message, title, tag);
 
         Calendar calendar = Calendar.getInstance();
@@ -126,25 +127,25 @@ public class LocalNotification extends GodotPlugin {
     private void checkIntent() {
         Intent intent = Godot.getCurrentIntent();
         if(intent == null) {
-            Log.e("godot", "RN: No intent in app activity!");
+            Log.d(TAG, "No intent in app activity");
             return;
         }
         if(intent.getExtras() != null) {
             Bundle extras = Godot.getCurrentIntent().getExtras();
-            Log.e("godot", "RN: Extras:" + extras.toString());
+            Log.d(TAG, "Extras:" + extras.toString());
             notificationData = new Dictionary();
             for (String key : extras.keySet()) {
                 Object value = extras.get(key);
                 try {
                     notificationData.put(key, value);
                 } catch(Exception e) {
-                    Log.e("godot", "RN: Conversion error: " + e.toString());
+                    Log.d(TAG, "Conversion error: " + e.toString());
                     e.printStackTrace();
                 }
-                Log.e("godot", "RN: Extras content: " + notificationData.toString());
+                Log.d(TAG, "Extras content: " + notificationData.toString());
             }
         } else {
-            Log.e("godot", "RN: No extra bundle in app activity!");
+            Log.d(TAG, "No extra bundle in app activity!");
         }
         if(intent.getAction() != null) {
             action = intent.getAction();
