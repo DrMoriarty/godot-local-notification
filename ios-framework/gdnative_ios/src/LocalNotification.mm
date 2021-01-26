@@ -233,6 +233,21 @@ void LocalNotification::showLocalNotification(const String message, const String
     } 
 }
 
+void LocalNotification::cancelLocalNotification(int tag)
+{
+    NSString *ident = [NSString stringWithFormat:@"ln_%d", tag];
+    if (@available(iOS 10.0, *)) {
+        [UNUserNotificationCenter.currentNotificationCenter removePendingNotificationRequestsWithIdentifiers:@[ident]];
+    }
+}
+
+void LocalNotification::cancelAllNotifications()
+{
+    if (@available(iOS 10.0, *)) {
+        [UNUserNotificationCenter.currentNotificationCenter removeAllPendingNotificationRequests];
+    }
+}
+
 void LocalNotification::registerRemoteNotifications()
 {
     //notificationListener = [MyNotificationListener new];
@@ -275,6 +290,8 @@ void LocalNotification::_register_methods()
 {
     register_method("_init", &LocalNotification::_init);
     register_method("showLocalNotification", &LocalNotification::showLocalNotification);
+    register_method("cancelLocalNotification", &LocalNotification::cancelLocalNotification);
+    register_method("cancelAllNotifications", &LocalNotification::cancelAllNotifications);
     register_method("isEnabled", &LocalNotification::isEnabled);
     register_method("isInited", &LocalNotification::isInited);
     register_method("init", &LocalNotification::init);

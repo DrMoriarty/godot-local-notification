@@ -46,6 +46,8 @@ public class LocalNotification extends GodotPlugin {
         return Arrays.asList(
                 "init",
                 "showLocalNotification",
+                "cancelLocalNotification",
+                "cancelAllNotifications",
                 "isInited",
                 "isEnabled",
                 "register_remote_notification",
@@ -96,6 +98,16 @@ public class LocalNotification extends GodotPlugin {
         } else {
             am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
         }
+    }
+
+    public void cancelLocalNotification(int tag) {
+        AlarmManager am = (AlarmManager)getActivity().getSystemService(getActivity().ALARM_SERVICE);
+        PendingIntent sender = getPendingIntent("", "", tag);
+        am.cancel(sender);
+    }
+
+    public void cancelAllNotifications() {
+        Log.w(TAG, "cancelAllNotifications not implemented");
     }
 
     public void register_remote_notification() {

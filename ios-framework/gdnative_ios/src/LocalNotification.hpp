@@ -26,6 +26,8 @@ public:
     void _init();
 
     void showLocalNotification(const godot::String message, const godot::String title, int interval, int tag);
+    void cancelLocalNotification(int tag);
+    void cancelAllNotifications();
     bool isEnabled();
     bool isInited();
     void init();
