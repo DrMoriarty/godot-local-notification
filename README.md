@@ -59,3 +59,13 @@ Returns action from deeplink, if exists. (Android only).
 ### get_deeplink_uri() -> String
 
 Returns deeplink URI, if exists (Android only).
+
+## Use push notifications for iOS
+
+1) check if notifications `is_inited`, it means that application requested permissions from user.
+2) call `init` if app didn’t requested it yet.
+3) catch signal `enabled` or check method `is_enabled`. It will return `false` if user didn’t grant you permission.
+4) get device token (`get_device_token`) for push notifications or catch signal `device_token_received`
+5) send your device token to the server side.
+
+That’s all. Sending notifications processed by your server, receiving notifications processed by OS. 
