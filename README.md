@@ -20,6 +20,14 @@ Add wrapper `scripts/localnotification.gd` into autoloading list in your project
 
 Show notification with `title` and `message` after delay of `interval` seconds with `tag`. You can override notification by it's tag before it was fired.
 
+### cancel(tag: int)
+
+Cancel previously created notification.
+
+### cancel_all()
+
+Cancel all pending notifications (implemented for iOS only).
+
 ### init()
 
 Request permission for notifications (iOS only).
