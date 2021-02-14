@@ -99,6 +99,23 @@ public class LocalNotification extends GodotPlugin {
             am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
         }
     }
+    
+    public void showLocalNotification(String message, String title, int interval, int tag, int repeat_duration) {
+        if(interval <= 0) return;
+        Log.i(TAG, "showLocalNotification: "+message+", "+Integer.toString(interval)+", "+Integer.toString(tag));
+        PendingIntent sender = getPendingIntent(message, title, tag);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.add(Calendar.SECOND, interval);
+               
+        AlarmManager am = (AlarmManager)getActivity().getSystemService(getActivity().ALARM_SERVICE);
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), repeat_duration, sender);
+        } else {
+            am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), repeat_duration, sender);
+        }
+    }
 
     public void cancelLocalNotification(int tag) {
         AlarmManager am = (AlarmManager)getActivity().getSystemService(getActivity().ALARM_SERVICE);
