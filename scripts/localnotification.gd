@@ -27,7 +27,7 @@ func show(message: String, title: String, interval: int, tag: int = 1) -> void:
     if _ln != null:
         _ln.showLocalNotification(message, title, interval, tag)
 
-func show_repeating(message: String, title: String, interval: int, tag: int = 1, repeat_duration: long) -> void:
+func show_repeating(message: String, title: String, interval: int, tag: int = 1, repeat_duration: int) -> void:
     if _ln != null:
         _ln.showLocalNotification(message, title, interval, tag, repeat_duration)
 
