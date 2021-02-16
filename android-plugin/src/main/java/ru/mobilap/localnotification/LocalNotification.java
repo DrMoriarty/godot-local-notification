@@ -29,11 +29,13 @@ public class LocalNotification extends GodotPlugin {
     private Dictionary notificationData = new Dictionary();
     private String action = null;
     private String uri = null;
+    private Boolean intentWasChecked = false;
 
     public LocalNotification(Godot godot) 
     {
         super(godot);
-        checkIntent();
+        intentWasChecked = false;
+        //checkIntent();
     }
 
     @Override
@@ -151,15 +153,18 @@ public class LocalNotification extends GodotPlugin {
     }
 
     @Override public void onMainResume() {
-        checkIntent();
+        //checkIntent();
+        intentWasChecked = false;
     } 
 
     private void checkIntent() {
+        Log.w(TAG, "I'm going to check application intent");
         Intent intent = Godot.getCurrentIntent();
         if(intent == null) {
             Log.d(TAG, "No intent in app activity");
             return;
         }
+        Log.w(TAG, "The intent isn't null, so check it closely.");
         if(intent.getExtras() != null) {
             Bundle extras = Godot.getCurrentIntent().getExtras();
             Log.d(TAG, "Extras:" + extras.toString());
@@ -168,32 +173,39 @@ public class LocalNotification extends GodotPlugin {
                 Object value = extras.get(key);
                 try {
                     notificationData.put(key, value);
+                    Log.w(TAG, "Get new value " + value.toString() + " for key " + key);
                 } catch(Exception e) {
                     Log.d(TAG, "Conversion error: " + e.toString());
                     e.printStackTrace();
                 }
-                Log.d(TAG, "Extras content: " + notificationData.toString());
             }
+            Log.d(TAG, "Extras content: " + notificationData.toString());
         } else {
             Log.d(TAG, "No extra bundle in app activity!");
         }
         if(intent.getAction() != null) {
+            Log.w(TAG, "Get deeplink action from intent");
             action = intent.getAction();
         }
         if(intent.getData() != null) {
+            Log.w(TAG, "Get uri from intent");
             uri = intent.getData().toString();
         }
+        intentWasChecked = true;
     }
 
     public Dictionary get_notification_data() {
+        if(!intentWasChecked) checkIntent();
         return notificationData;
     }
 
     public String get_deeplink_action() {
+        if(!intentWasChecked) checkIntent();
         return action;
     }
 
     public String get_deeplink_uri() {
+        if(!intentWasChecked) checkIntent();
         return uri;
     }
 }
