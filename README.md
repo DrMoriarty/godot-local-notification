@@ -16,9 +16,10 @@ Add wrapper `scripts/localnotification.gd` into autoloading list in your project
 
 ## API
 
-### show(message: String, title: String, interval: float, tag: int)
+### show(message: String, title: String, interval: float, tag: int, repeating_interval: int = 0)
 
 Show notification with `title` and `message` after delay of `interval` seconds with `tag`. You can override notification by it's tag before it was fired.
+If you defined `repeating_interval` the notification will be fired in a loop until you cancelled it.
 
 ### cancel(tag: int)
 
@@ -59,6 +60,21 @@ Returns action from deeplink, if exists. (Android only).
 ### get_deeplink_uri() -> String
 
 Returns deeplink URI, if exists (Android only).
+
+## Customising notifications for Android
+
+The default notification color is defined in `android/build/res/values/notification-color.xml`. You can change it at your desire. The color string format is `#RRGGBB`.
+
+In order to change default notification icon you should make this new files:
+```
+android/build/res/mipmap/notification_icon.png            Size 192x192
+android/build/res/mipmap-hdpi-v4/notification_icon.png    Size 72x72
+android/build/res/mipmap-mdpi-v4/notification_icon.png    Size 48x48
+android/build/res/mipmap-xhdpi-v4/notification_icon.png   Size 96x96
+android/build/res/mipmap-xxhdpi-v4/notification_icon.png  Size 144x144
+android/build/res/mipmap-xxxhdpi-v4/notification_icon.png Size 192x192
+```
+Notification icons should be b/w with alpha channel. They will be tinted with color which we discuss above.
 
 ## Use push notifications for iOS
 
