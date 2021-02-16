@@ -46,6 +46,7 @@ public class LocalNotification extends GodotPlugin {
         return Arrays.asList(
                 "init",
                 "showLocalNotification",
+                "showRepeatingNotification",
                 "cancelLocalNotification",
                 "cancelAllNotifications",
                 "isInited",
@@ -85,7 +86,7 @@ public class LocalNotification extends GodotPlugin {
 
     public void showLocalNotification(String message, String title, int interval, int tag) {
         if(interval <= 0) return;
-        Log.i(TAG, "showLocalNotification: "+message+", "+Integer.toString(interval)+", "+Integer.toString(tag));
+        Log.d(TAG, "showLocalNotification: "+message+", "+Integer.toString(interval)+", "+Integer.toString(tag));
         PendingIntent sender = getPendingIntent(message, title, tag);
 
         Calendar calendar = Calendar.getInstance();
@@ -100,9 +101,9 @@ public class LocalNotification extends GodotPlugin {
         }
     }
     
-    public void showLocalNotification(String message, String title, int interval, int tag, int repeat_duration) {
+    public void showRepeatingNotification(String message, String title, int interval, int tag, int repeat_duration) {
         if(interval <= 0) return;
-        Log.i(TAG, "showLocalNotification: "+message+", "+Integer.toString(interval)+", "+Integer.toString(tag));
+        Log.d(TAG, "showRepeatingNotification: "+message+", "+Integer.toString(interval)+", "+Integer.toString(tag));
         PendingIntent sender = getPendingIntent(message, title, tag);
 
         Calendar calendar = Calendar.getInstance();

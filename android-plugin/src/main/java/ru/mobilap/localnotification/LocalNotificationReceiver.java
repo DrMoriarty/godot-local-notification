@@ -50,20 +50,27 @@ public class LocalNotificationReceiver extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
 
         int iconID = context.getResources().getIdentifier("icon", "mipmap", context.getPackageName());
+        int notificationIconID = context.getResources().getIdentifier("notification_icon", "mipmap", context.getPackageName());
         Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), iconID);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID);
-        //builder.setContentTitle(context.getString(R.string.app_name));
+        int colorID = context.getResources().getIdentifier("notification_color", "color", context.getPackageName());
         builder.setShowWhen(false);
         builder.setContentTitle(title);
         builder.setContentText(message);
-        builder.setSmallIcon(iconID);
+        if (notificationIconID <= 0)
+            builder.setSmallIcon(iconID);
+        else
+            builder.setSmallIcon(notificationIconID);
         builder.setLargeIcon(largeIcon);
         builder.setBadgeIconType(NotificationCompat.BADGE_ICON_LARGE);
         builder.setTicker(message);
         builder.setAutoCancel(true);
         builder.setDefaults(Notification.DEFAULT_ALL);
         builder.setColorized(true);
-        builder.setColor(Color.RED);
+        if (colorID <= 0)
+            builder.setColor(Color.RED);
+        else
+            builder.setColor(context.getResources().getColor(colorID));
         builder.setContentIntent(pendingIntent);
         builder.setNumber(1);
         //builder.addAction();

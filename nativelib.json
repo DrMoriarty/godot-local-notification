@@ -2,7 +2,7 @@
   "name": "local-notification",
   "display_name": "Local/Push Notifications",
   "description": "Local notification plugin for iOS/Android",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "license": "MIT",
   "godot_version": "3.2.3",
   "url": "https://github.com/DrMoriarty/godot-local-notification.git",
@@ -31,7 +31,8 @@
   "platform_android": {
     "files": {
       "android-plugin/LocalNotification.gdap": "android/plugins/",
-      "android-plugin/build/outputs/aar/LocalNotification.release.aar": "android/plugins/"
+      "android-plugin/build/outputs/aar/LocalNotification.release.aar": "android/plugins/",
+      "android-plugin/xml/notification-color.xml": "android/build/res/values/"
     }
   }
 }

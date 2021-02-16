@@ -23,13 +23,12 @@ func init() -> void:
     if _ln != null:
         _ln.init()
 
-func show(message: String, title: String, interval: int, tag: int = 1) -> void:
+func show(message: String, title: String, interval: int, tag: int = 1, repeat_duration: int = 0) -> void:
     if _ln != null:
-        _ln.showLocalNotification(message, title, interval, tag)
-
-func show_repeating(message: String, title: String, interval: int, tag: int = 1, repeat_duration: int) -> void:
-    if _ln != null:
-        _ln.showLocalNotification(message, title, interval, tag, repeat_duration)
+        if repeat_duration <= 0:
+            _ln.showLocalNotification(message, title, interval, tag)
+        else:
+            _ln.showRepeatingNotification(message, title, interval, tag, repeat_duration)
 
 func cancel(tag: int = 1) -> void:
     if _ln != null:

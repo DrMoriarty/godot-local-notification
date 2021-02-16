@@ -233,6 +233,30 @@ void LocalNotification::showLocalNotification(const String message, const String
     } 
 }
 
+void LocalNotification::showRepeatingNotification(const godot::String message, const godot::String title, int interval, int tag, int repeating_interval)
+{
+    if(!enabled) {
+        NSLog(@"Can not show local notification!");
+        return;
+    }
+    NSString *msg = [NSString stringWithUTF8String:message.utf8().get_data()];
+    NSString *tit = [NSString stringWithUTF8String:title.utf8().get_data()];
+    NSString *ident = [NSString stringWithFormat:@"ln_%d", tag];
+    NSLog(@"showRepeatingNotification: %@, %@, %@", msg, @(interval), @(tag));
+
+    if (@available(iOS 10.0, *)) {
+        [UNUserNotificationCenter.currentNotificationCenter removePendingNotificationRequestsWithIdentifiers:@[ident]];
+        UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+        content.title = tit;
+        content.body = msg;
+        UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:repeating_interval repeats:YES];
+        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:ident content:content trigger:trigger];
+        [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+                if(error) NSLog(@"Error when schedule the notification: %@", error);
+            }];
+    } 
+}
+
 void LocalNotification::cancelLocalNotification(int tag)
 {
     NSString *ident = [NSString stringWithFormat:@"ln_%d", tag];
@@ -290,6 +314,7 @@ void LocalNotification::_register_methods()
 {
     register_method("_init", &LocalNotification::_init);
     register_method("showLocalNotification", &LocalNotification::showLocalNotification);
+    register_method("showRepeatingNotification", &LocalNotification::showRepeatingNotification);
     register_method("cancelLocalNotification", &LocalNotification::cancelLocalNotification);
     register_method("cancelAllNotifications", &LocalNotification::cancelAllNotifications);
     register_method("isEnabled", &LocalNotification::isEnabled);
