@@ -14,6 +14,8 @@ func _ready() -> void:
         _ln = load("res://addons/localnotification-ios/localnotification.gdns").new()
         _ln.connect('notifications_enabled', self, '_on_notifications_enabled')
         _ln.connect('device_token_received', self, '_on_device_token_received')
+    elif OS.get_name() == 'HTML5':
+        _ln = load("res://addons/localnotification-html5/HTML5NotificationsPlugin.gd").new()
     if _ln == null:
         push_warning('LocalNotification plugin not found!')
     else:
