@@ -85,3 +85,7 @@ Notification icons should be b/w with alpha channel. They will be tinted with co
 5) send your device token to the server side.
 
 That’s all. Sending notifications processed by your server, receiving notifications processed by OS. 
+
+## Troubleshooting
+
+If the notification doesn't appear, make sure you're not trying to display it while your game is in the foreground. In iOS, apps can only show notifications if they are in the background. This implies that you must use `interval` > 0.
