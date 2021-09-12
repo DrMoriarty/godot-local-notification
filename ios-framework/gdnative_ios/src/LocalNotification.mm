@@ -224,6 +224,8 @@ void LocalNotification::showLocalNotification(const String message, const String
         UNMutableNotificationContent *content = [UNMutableNotificationContent new];
         content.title = tit;
         content.body = msg;
+        content.sound = [UNNotificationSound defaultSound];
+
         //content.categoryIdentifier = @"Call menu";
         UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:interval repeats:NO];
         UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:ident content:content trigger:trigger];
@@ -249,6 +251,8 @@ void LocalNotification::showRepeatingNotification(const godot::String message, c
         UNMutableNotificationContent *content = [UNMutableNotificationContent new];
         content.title = tit;
         content.body = msg;
+        content.sound = [UNNotificationSound defaultSound];
+
         UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:repeating_interval repeats:YES];
         UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:ident content:content trigger:trigger];
         [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
