@@ -32,6 +32,9 @@ func show(message: String, title: String, interval: int, tag: int = 1, repeat_du
         else:
             _ln.showRepeatingNotification(message, title, interval, tag, repeat_duration)
 
+func show_daily(message: String, title: String, hour: int, minute: int, tag: int = 1) -> void:
+    _ln.showRepeatingNotification(message, title, hour, minute, tag)
+
 func cancel(tag: int = 1) -> void:
     if _ln != null:
         _ln.cancelLocalNotification(tag)
