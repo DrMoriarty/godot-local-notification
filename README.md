@@ -21,6 +21,13 @@ Add wrapper `scripts/localnotification.gd` into autoloading list in your project
 Show notification with `title` and `message` after delay of `interval` seconds with `tag`. You can override notification by it's tag before it was fired.
 If you defined `repeating_interval` the notification will be fired in a loop until you cancelled it.
 
+### show_daily(message: String, title: String, hour: int, minute: int, tag: int = 1)
+
+Show notification daily at specific hour and minute (in 24 hour format).
+You can overide the notification with new time, or cancel it with tag and register a new one.
+
+*Need help*: Currently just support ios, need help on Android
+
 ### cancel(tag: int)
 
 Cancel previously created notification.
