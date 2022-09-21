@@ -49,6 +49,7 @@ dependencies {
      */
     compileOnly fileTree(dir: 'libs', include: ['godot-lib*.aar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.work:work-runtime:2.7.1'
 }
 
 group = 'ru.mobilap.godot'
