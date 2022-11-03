@@ -20,13 +20,13 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 32
-    buildToolsVersion "29.0.3"
+    buildToolsVersion "32.0.0"
 
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 32
         versionCode 1
-        versionName "1.0"
+        versionName "1.1"
     }
 
     // Used to customize the name of generated AAR file.
@@ -47,7 +47,7 @@ dependencies {
      necessary since the Godot editor will also provide a version of the godot
      library when building the final binary.
      */
-    compileOnly fileTree(dir: 'libs', include: ['godot-lib*.aar'])
+    implementation 'io.github.m4gr3d:godot:3.5.1.stable'
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.work:work-runtime:2.7.1'
 }
