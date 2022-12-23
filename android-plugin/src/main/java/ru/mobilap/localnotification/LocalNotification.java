@@ -146,7 +146,7 @@ public class LocalNotification extends GodotPlugin {
         i.putExtra("notification_id", tag);
         i.putExtra("message", message);
         i.putExtra("title", title);
-        PendingIntent sender = PendingIntent.getBroadcast(getActivity(), tag, i, PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent sender = PendingIntent.getBroadcast(getActivity(), tag, i, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         return sender;
     }
 
