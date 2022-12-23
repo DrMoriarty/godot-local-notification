@@ -16,23 +16,27 @@ Add wrapper `scripts/localnotification.gd` into autoloading list in your project
 
 ## API
 
-### show(message: String, title: String, interval: float, tag: int, repeating_interval: int = 0)
+### showLocalNotification(message: String, title: String, interval: float, tag: int)
 
 Show notification with `title` and `message` after delay of `interval` seconds with `tag`. You can override notification by it's tag before it was fired.
-If you defined `repeating_interval` the notification will be fired in a loop until you cancelled it.
+
+### showRepeatingNotification(message: String, title: String, interval: float, tag: int, repeat_duration: int)
+Show notification with `title` and `message` after delay of `interval` seconds with `tag`. You can override notification by it's tag before it was fired.
+`repeating_interval` the notification will be fired in a loop until you cancelled it.
+
 
 ### show_daily(message: String, title: String, hour: int, minute: int, tag: int = 1)
-
+(IOS Only)
 Show notification daily at specific hour and minute (in 24 hour format).
 You can overide the notification with new time, or cancel it with tag and register a new one.
 
 *Need help*: Currently just support ios, need help on Android
 
-### cancel(tag: int)
+### cancelLocalNotification(tag: int)
 
 Cancel previously created notification.
 
-### cancel_all()
+### cancelAllNotifications()
 
 Cancel all pending notifications (implemented for iOS only).
 
@@ -50,7 +54,7 @@ Check if notification permission was granted by user (iOS only).
 
 ### register_remote_notification()
 
-Request system token for push notifications.
+Request system token for push notifications. (iOS only)
 
 ### get_device_token() -> String
 
