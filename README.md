@@ -10,6 +10,8 @@ This is a module for [Godot Game Engine](http://godotengine.org/) which add loca
 
 3. Enable **Custom Build** for using in Android.
 
+4. Enable Local Notification Plugin in Export options.
+
 ## Usage
 
 Add wrapper `scripts/localnotification.gd` into autoloading list in your project. So you can use it everywhere in your code.
