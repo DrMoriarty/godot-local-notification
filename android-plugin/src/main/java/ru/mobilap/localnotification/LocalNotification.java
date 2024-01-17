@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Calendar;
+
+import org.godotengine.godot.plugin.UsedByGodot;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,18 +76,18 @@ public class LocalNotification extends GodotPlugin {
     }
 
     // Public methods
-
+    @UsedByGodot
     public void init() {
     }
-
+    @UsedByGodot
     public boolean isInited() {
         return true;
     }
-
+    @UsedByGodot
     public boolean isEnabled() {
         return true;
     }
-
+    @UsedByGodot
     public void showLocalNotification(String message, String title, int interval, int tag) {
         if(interval <= 0) return;
         Log.d(TAG, "showLocalNotification: "+message+", "+Integer.toString(interval)+", "+Integer.toString(tag));
@@ -102,7 +104,7 @@ public class LocalNotification extends GodotPlugin {
             am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
         }
     }
-    
+    @UsedByGodot
     public void showRepeatingNotification(String message, String title, int interval, int tag, int repeat_duration) {
         if(interval <= 0) return;
         Log.d(TAG, "showRepeatingNotification: "+message+", "+Integer.toString(interval)+", "+Integer.toString(tag)+" Repeat after: "+Integer.toString(repeat_duration));
@@ -119,20 +121,20 @@ public class LocalNotification extends GodotPlugin {
             am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), repeat_duration*1000, sender);
         }
     }
-
+    @UsedByGodot
     public void cancelLocalNotification(int tag) {
         AlarmManager am = (AlarmManager)getActivity().getSystemService(getActivity().ALARM_SERVICE);
         PendingIntent sender = getPendingIntent("", "", tag);
         am.cancel(sender);
     }
-
+    @UsedByGodot
     public void cancelAllNotifications() {
         Log.w(TAG, "cancelAllNotifications not implemented");
     }
-
+    @UsedByGodot
     public void register_remote_notification() {
     }
-
+    @UsedByGodot
     public String get_device_token() {
         return "";
     }
@@ -144,7 +146,7 @@ public class LocalNotification extends GodotPlugin {
         i.putExtra("notification_id", tag);
         i.putExtra("message", message);
         i.putExtra("title", title);
-        PendingIntent sender = PendingIntent.getBroadcast(getActivity(), tag, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent sender = PendingIntent.getBroadcast(getActivity(), tag, i, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         return sender;
     }
 
@@ -193,17 +195,17 @@ public class LocalNotification extends GodotPlugin {
         }
         intentWasChecked = true;
     }
-
+    @UsedByGodot
     public Dictionary get_notification_data() {
         if(!intentWasChecked) checkIntent();
         return notificationData;
     }
-
+    @UsedByGodot
     public String get_deeplink_action() {
         if(!intentWasChecked) checkIntent();
         return action;
     }
-
+    @UsedByGodot
     public String get_deeplink_uri() {
         if(!intentWasChecked) checkIntent();
         return uri;
